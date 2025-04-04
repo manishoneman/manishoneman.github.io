@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us - Vintech Computer Education</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8f9fa; color: #333; }
+
+    header {
+      background: #0a192f;
+      color: #fff;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+    .logo { font-size: 1.5rem; color: #64ffda; font-weight: bold; }
+    .navbar a { color: white; margin-left: 20px; text-decoration: none; font-size: 1rem; }
+    .menu-toggle { display: none; font-size: 1.5rem; cursor: pointer; color: #64ffda; }
+
+    .sidebar {
+      background: #112240;
+      color: white;
+      width: 250px;
+      position: fixed;
+      top: 60px;
+      left: 0;
+      height: calc(100% - 60px);
+      padding: 20px;
+      transform: translateX(-100%);
+      transition: 0.3s ease;
+    }
+    .sidebar.active { transform: translateX(0); }
+    .sidebar a { display: block; color: #ccd6f6; margin-bottom: 15px; text-decoration: none; }
+
+    main {
+      margin-left: 0;
+      padding: 100px 20px 60px;
+      max-width: 1000px;
+      margin: 100px auto 60px;
+    }
+
+    section {
+      background: white;
+      margin-bottom: 30px;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      color: #0a192f;
+      margin-bottom: 15px;
+    }
+
+    .about-img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+
+    .team {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .team-member {
+      flex: 1 1 200px;
+      background: #e3f2fd;
+      border-radius: 10px;
+      padding: 15px;
+      text-align: center;
+    }
+
+    .team-member img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin-bottom: 10px;
+    }
+
+    .footer {
+      background: #0a192f;
+      color: white;
+      text-align: center;
+      padding: 20px 10px;
+    }
+    .social-links a {
+      color: #64ffda;
+      margin: 0 10px;
+      font-size: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .menu-toggle { display: block; }
+      .navbar { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">Vintech</div>
+    <nav class="navbar">
+      <a href="#">Home</a>
+      <a href="#">Courses</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </nav>
+    <div class="menu-toggle" onclick="toggleSidebar()">
+      <i class="fas fa-bars"></i>
+    </div>
+  </header>
+
+  <aside class="sidebar" id="sidebar">
+    <a href="#">Home</a>
+    <a href="#">Courses</a>
+    <a href="#">About Us</a>
+    <a href="#">Contact</a>
+  </aside>
+
+  <main>
+    <section>
+      <h2>About Vintech Computer Education</h2>
+      <p>Vintech Computer Education is a leading institution providing advanced computer education to students of all levels. With a mission to make every student digitally empowered, we offer a wide variety of courses from basic to professional levels including ADCA, MDCA, Python, Java, O-Level, and more.</p>
+      <img src="https://source.unsplash.com/900x300/?computer,classroom" alt="About Us" class="about-img" />
+    </section>
+
+    <section>
+      <h2>Our Vision</h2>
+      <p>We aim to be the top destination for practical and professional computer training by offering affordable and industry-relevant courses.</p>
+    </section>
+
+    <section>
+      <h2>Why Choose Us?</h2>
+      <ul>
+        <li>Experienced and qualified instructors</li>
+        <li>Live projects and assignments</li>
+        <li>Affordable course fees</li>
+        <li>100% practical training</li>
+        <li>Career support and job assistance</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Meet Our Team</h2>
+      <div class="team">
+        <div class="team-member">
+          <img src="https://source.unsplash.com/100x100/?man,face" alt="Owner" />
+          <h4>Rajesh Sharma</h4>
+          <p>Founder & Director</p>
+        </div>
+        <div class="team-member">
+          <img src="https://source.unsplash.com/100x100/?woman,face" alt="Staff" />
+          <h4>Priya Verma</h4>
+          <p>Senior Trainer</p>
+        </div>
+        <div class="team-member">
+          <img src="https://source.unsplash.com/100x100/?teacher,man" alt="Staff" />
+          <h4>Amit Singh</h4>
+          <p>Web Development Trainer</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2025 Vintech Computer Education. All Rights Reserved.</p>
+    <div class="social-links">
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-linkedin-in"></i></a>
+    </div>
+  </footer>
+
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('active');
+
+      if (sidebar.classList.contains('active')) {
+        document.addEventListener('click', closeSidebarOnClickOutside);
+      } else {
+        document.removeEventListener('click', closeSidebarOnClickOutside);
+      }
+    }
+
+    function closeSidebarOnClickOutside(e) {
+      const sidebar = document.getElementById('sidebar');
+      const toggle = document.querySelector('.menu-toggle');
+      if (!sidebar.contains(e.target) && !toggle.contains(e.target)) {
+        sidebar.classList.remove('active');
+        document.removeEventListener('click', closeSidebarOnClickOutside);
+      }
+    }
+  </script>
+</body>
+</html>
