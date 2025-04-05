@@ -1,20 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Vintech Computer Education</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
 </head>
 <body>
+  <!-- Popup -->
+  <div class="popup" id="popup">
+    <div class="popup-content">
+      <img src="https://via.placeholder.com/300x200?text=New+Registration" alt="New Registration">
+      <h2>New Registration</h2>
+      <a href="enroll.html" class="popup-btn">Register Now</a>
+      <span class="close-btn" onclick="closePopup()">&times;</span>
+    </div>
+  </div>
+
+  <!-- Header -->
   <header class="header">
     <div class="logo">Vintech Computer Education</div>
     <nav class="navbar" id="navbar">
       <a href="#">Home</a>
-      <a href="courses.html">Courses</a>
-      <a href="about.html">About Us</a>
+      <a href="#courses">Courses</a>
+      <a href="#about">About Us</a>
       <a href="#contact">Contact</a>
     </nav>
     <div class="menu-toggle" onclick="toggleSidebar()">
@@ -22,63 +32,219 @@
     </div>
   </header>
 
+  <!-- Sidebar -->
   <aside class="sidebar" id="sidebar">
     <a href="#">Home</a>
     <a href="#courses">Courses</a>
-    <a href="about.html">About Us</a>
+    <a href="#about">About Us</a>
     <a href="#contact">Contact</a>
   </aside>
 
+  <!-- Main Content -->
   <main class="main-content">
-    <section class="hero" id="hero">
-      <img src="HERO.jpg" alt="Hero Image" class="hero-img">
-      <div class="hero-text">
-        <h1>Welcome to Vintech</h1>
-        <p>Jahan Skill Banti Hai Wahaan Future Chamakta Hai</p>
-      </div>
-    </section>
+    <!-- Hero -->
+   <!-- HERO SECTION START -->
+<section class="hero-section">
+  <div class="hero-overlay">
+    <div class="hero-content">
+      <h1>Welcome to Vintech Computer Education</h1>
+      <p>Master the future with our professional computer courses</p>
+      <a href="#courses" class="hero-btn">Explore Courses</a>
+    </div>
+  </div>
+</section>
+<!-- HERO SECTION END -->
 
+
+    <!-- Courses -->
     <section class="courses" id="courses">
-      <h2>Our Courses</h2>
+      <h2>Our Top Courses</h2>
       <div class="course-grid">
         <div class="course-card">
-          <img src="https://gratisography.com/wp-content/uploads/2024/11/gratisography-augmented-reality-800x525.jpg" alt="Web Development">
+          <img src="registration.jpg" alt="Web Dev">
           <div class="course-info">
-            <h3>Full Stack Web Development</h3>
-            <p>HTML, CSS, JS, React, Node.js & more</p>
-            <a href="#" class="enroll-btn">Enroll</a>
+            <h3>New Registration</h3>
+            <!-- <p>HTML, CSS, JS, React, Node.js & more</p> -->
+            <a href="enroll.html" class="enroll-btn">Enroll Now</a>
           </div>
         </div>
         <div class="course-card">
-          <img src="https://gratisography.com/wp-content/uploads/2024/11/gratisography-augmented-reality-800x525.jpg" alt="UI/UX Design">
+          <img src="course.png" alt="UI/UX">
           <div class="course-info">
-            <h3>UI/UX Design</h3>
-            <p>Figma, Prototyping, Adobe XD</p>
-            <a href="#" class="enroll-btn">Enroll</a>
+            <h3>Courses</h3>
+            <!-- <p>Figma, Adobe XD, User Research</p> -->
+            <a href="courses.html" class="enroll-btn">View Details</a>
           </div>
         </div>
         <div class="course-card">
-          <img src="https://gratisography.com/wp-content/uploads/2024/11/gratisography-augmented-reality-800x525.jpg" alt="Graphic Design">
+          <img src="diploma.jpg" alt="Graphic">
           <div class="course-info">
-            <h3>Graphic Design</h3>
-            <p>Photoshop, Illustrator & more</p>
-            <a href="#" class="enroll-btn">Enroll</a>
+            <h3>Download Certificate</h3>
+            <!-- <p>Photoshop, Illustrator & Canva</p> -->
+            <a href="cirtificate.html" class="enroll-btn">Download</a>
+          </div>
+        </div>
+        <div class="course-card">
+          <img src="fee.jpg" alt="Graphic">
+          <div class="course-info">
+            <h3>Fee Slip</h3>
+            <!-- <p>Photoshop, Illustrator & Canva</p> -->
+            <a href="fee_slip.html" class="enroll-btn">View Details</a>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="about" id="about">
-      <h2>About Us</h2>
-      <p>Vintech Computer Education is a leading institute offering high-quality courses in IT and design. Our mission is to empower students with the skills they need to succeed in the digital world.</p>
-    </section>
+   <!-- ✅ ABOUT US - FULL PAGE START -->
+<section class="about-page" id="about">
+  <div class="container">
+    <!-- Section Heading -->
+    <h2 class="section-title">About Vintech Computer Education</h2>
+    <p class="section-intro">
+      We are a premier institute offering world-class IT and design education, shaping the next generation of tech leaders.
+    </p>
 
-    <section class="contact" id="contact">
-      <h2>Contact Us</h2>
-      <p>Email: vintechcomputereducation.info@gmail.com | Phone: +91 9068485233</p>
-    </section>
+    <!-- Owner Section -->
+    <div class="owner-section">
+      <img src="owner.png" alt="Owner" class="owner-img" />
+      <div class="owner-info">
+        <h3>Mr. Manish Vishwakarma</h3>
+        <p>Founder & Director</p>
+        <p>
+          With over a decade of experience, Mr. Manis Vishwakarama has trained thousands of students and built a legacy of digital excellence.
+        </p>
+      </div>
+    </div>
+
+    <!-- Mission/Vision/Highlights -->
+    <div class="info-grid">
+      <div class="info-box">
+        <i class="fas fa-bullseye"></i>
+        <h4>Our Mission</h4>
+        <p>To deliver practical, job-oriented training that transforms lives.</p>
+      </div>
+      <div class="info-box">
+        <i class="fas fa-eye"></i>
+        <h4>Our Vision</h4>
+        <p>To be the top choice for computer education in India.</p>
+      </div>
+      <div class="info-box">
+        <i class="fas fa-star"></i>
+        <h4>Highlights</h4>
+        <ul>
+          <li>✔ Certified Trainers</li>
+          <li>✔ Live Projects</li>
+          <li>✔ Placement Support</li>
+        </ul>
+      </div>
+      <div class="info-box">
+        <i class="fas fa-headset"></i>
+        <h4>Student Support</h4>
+        <p>24/7 doubt resolution and mentorship by real professionals.</p>
+      </div>
+    </div>
+
+    <!-- Animated Stats -->
+    <div class="stats-section">
+      <div class="stat">
+        <h3 data-count="5000">0</h3>
+        <p>Students Trained</p>
+      </div>
+      <div class="stat">
+        <h3 data-count="25">0</h3>
+        <p>Courses Offered</p>
+      </div>
+      <div class="stat">
+        <h3 data-count="100">0%</h3>
+        <p>Placement Support</p>
+      </div>
+      <div class="stat">
+        <h3 data-count="10">0+</h3>
+        <p>Years of Legacy</p>
+      </div>
+    </div>
+
+    <!-- 💥 Student Showcase -->
+    <h3 class="showcase-title">Our Brilliant Students</h3>
+    <div class="student-showcase">
+      <div class="student-card">
+        <img src="rahul.png" alt="Student 1" />
+        <h4>Rahul Thakur</h4>
+        <p>Center Director </p>
+      </div>
+      <div class="student-card">
+        <img src="prem.png" alt="Student 2" />
+        <h4>Prem singh</h4>
+        <p>Center Director</p>
+      </div>
+      <div class="student-card">
+        <img src="https://i.postimg.cc/jqzf8Pdj/undefined-Imgur-3.jpg" alt="Student 3" />
+        <h4>Esub </h4>
+        <p>Center Director</p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ✅ ABOUT US - FULL PAGE END -->
+
+
+    <!-- Contact -->
+    <!-- ✅ CONTACT US SECTION START -->
+<section class="contact" id="contact">
+  <div class="container">
+    <h2 class="section-title">Contact Us</h2>
+    <p class="section-intro">We’re here to assist you! Reach out to any of our centers or use the form below.</p>
+
+    <!-- 🔹 Contact Info -->
+    <div class="contact-info">
+      <div class="info-box">
+        <i class="fas fa-envelope"></i>
+        <h4>Email</h4>
+        <p>vintechcomputereducation.<br>info@gmail.com</p>
+      </div>
+      <div class="info-box">
+        <i class="fas fa-phone"></i>
+        <h4>Phone</h4>
+        <p>+91 9068485233</p>
+      </div>
+      <div class="info-box">
+        <i class="fas fa-clock"></i>
+        <h4>Working Hours</h4>
+        <p>Mon - Sat: 8:00 AM to 8:00 PM</p>
+      </div>
+    </div>
+
+    <!-- 🔹 Center Details -->
+    <div class="center-grid">
+      <!-- Center 1 -->
+      <div class="center-box">
+        <img src="https://via.placeholder.com/400x200.png?text=Center+1" alt="Center 1">
+        <h4>Vintech Center - City A</h4>
+        <p><i class="fas fa-map-marker-alt"></i> Near Abhiram Hospital , oposite SBI Bank</p>
+        <p><i class="fas fa-phone-alt"></i> +91 9456489436</p>
+      </div>
+      <!-- Center 2 -->
+      <div class="center-box">
+        <img src="https://via.placeholder.com/400x200.png?text=Center+2" alt="Center 2">
+        <h4>Vintech Center - City B</h4>
+        <p><i class="fas fa-map-marker-alt"></i> Dohra Road ,opposite Vedanta Hospital</p>
+        <p><i class="fas fa-phone-alt"></i> +91 9068485233,+91 9048676643</p>
+      </div>
+      <!-- Center 3 -->
+      <div class="center-box">
+        <img src="https://via.placeholder.com/400x200.png?text=Center+3" alt="Center 3">
+        <h4>Coming Soon.......</h4>
+        <p><i class="fas fa-map-marker-alt"></i> xyz address</p>
+        <p><i class="fas fa-phone-alt"></i> +91 xxxxxxxxxx</p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ✅ CONTACT US SECTION END -->
+
   </main>
 
+  <!-- Footer -->
   <footer class="footer">
     <p>&copy; 2025 Vintech Computer Education. All Rights Reserved.</p>
     <div class="social-links">
