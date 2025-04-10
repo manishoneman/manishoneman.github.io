@@ -123,37 +123,66 @@
     </div>
   </div>
 
-  <script>
-    const data = {
-      "2025-001": {
-        name: "Aman Sharma",
-        roll: "1201",
-        course: "Advanced Web Development",
-        batch: "10:00 AM - 12:00 PM",
-        total: 12000,
-        remaining: 2000
-      },
-      "2025-002": {
-        name: "Priya Singh",
-        roll: "1202",
-        course: "Graphic Designing",
-        batch: "2:00 PM - 4:00 PM",
-        total: 10000,
-        remaining: 0
-      }
+  <!-- Firebase SDK and the fees slip logic -->
+  <script type="module">
+    // Import the Firebase modules using the CDN (v9 modular)
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-analytics.js";
+    import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
+
+    // Your Firebase configuration object
+    const firebaseConfig = {
+      apiKey: "AIzaSyBhGwcxTk5Yj83ik0KzT3kB6hv9HJUN5ks",
+      authDomain: "fees-slip.firebaseapp.com",
+      databaseURL: "https://fees-slip-default-rtdb.firebaseio.com",
+      projectId: "fees-slip",
+      storageBucket: "fees-slip.firebasestorage.app",
+      messagingSenderId: "141378138625",
+      appId: "1:141378138625:web:cec7f17bf9cb3f358c4600",
+      measurementId: "G-VNR51PRF4H"
     };
 
-    function generateSlip() {
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const db = getDatabase(app);
+
+    // Function to fetch the slip data from Firebase Realtime Database
+    async function fetchSlipData(receipt) {
+      const dbRef = ref(db);
+      try {
+        // Assuming your data is stored under "fees" node keyed by receipt number
+        const snapshot = await get(child(dbRef, `fees/${receipt}`));
+        if (snapshot.exists()) {
+          return snapshot.val();
+        } else {
+          return null;
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        return null;
+      }
+    }
+
+    // Function triggered when user clicks the button
+    window.generateSlip = async function () {
       const receipt = document.getElementById('receiptInput').value.trim();
       const slip = document.getElementById('feesSlip');
 
-      if (data[receipt]) {
-        document.getElementById('studentName').innerText = data[receipt].name;
-        document.getElementById('rollNumber').innerText = data[receipt].roll;
-        document.getElementById('course').innerText = data[receipt].course;
-        document.getElementById('batch').innerText = data[receipt].batch;
-        document.getElementById('totalFees').innerText = data[receipt].total;
-        document.getElementById('remainingFees').innerText = data[receipt].remaining;
+      if (receipt === "") {
+        alert("Please enter a receipt number.");
+        return;
+      }
+
+      // Fetch data from Firebase
+      const data = await fetchSlipData(receipt);
+      if (data) {
+        document.getElementById('studentName').innerText = data.name || "";
+        document.getElementById('rollNumber').innerText = data.roll || "";
+        document.getElementById('course').innerText = data.course || "";
+        document.getElementById('batch').innerText = data.batch || "";
+        document.getElementById('totalFees').innerText = data.total || "";
+        document.getElementById('remainingFees').innerText = data.remaining || "";
         slip.style.display = 'block';
       } else {
         alert("❌ No record found for this receipt number.");
