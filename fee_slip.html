@@ -13,7 +13,8 @@
     }
     body {
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(50,50,50,0.7)), url('https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c');
+      background: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(50,50,50,0.7)),
+                  url('https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c');
       background-size: cover;
       color: #fff;
       min-height: 100vh;
@@ -60,6 +61,11 @@
     button:hover {
       transform: scale(1.03);
     }
+    .loading {
+      text-align: center;
+      margin-bottom: 15px;
+      font-size: 18px;
+    }
     .slip {
       margin-top: 20px;
       background: rgba(255,255,255,0.2);
@@ -105,7 +111,9 @@
   <div class="container">
     <h1>Vintech Fees Slip</h1>
     <input type="text" id="receiptInput" placeholder="Enter Receipt Number (e.g. 2025-001)" />
-    <button onclick="generateSlip()">View Fees Details</button>
+    <button id="viewSlipBtn">View Fees Details</button>
+    <!-- Loading indicator -->
+    <div class="loading" id="loading" style="display: none;">Loading data, please wait...</div>
 
     <div class="slip" id="feesSlip">
       <h3>Student Fee Details</h3>
@@ -124,42 +132,57 @@
   </div>
 
   <script>
-    const data = {
-      "2025-001": {
-        name: "Aman Sharma",
-        roll: "1201",
-        course: "Advanced Web Development",
-        batch: "10:00 AM - 12:00 PM",
-        total: 12000,
-        remaining: 2000
-      },
-      "2025-002": {
-        name: "Priya Singh",
-        roll: "1202",
-        course: "Graphic Designing",
-        batch: "2:00 PM - 4:00 PM",
-        total: 10000,
-        remaining: 0
-      }
-    };
+    // URL of your JSON file stored on GitHub (update this URL to your actual file)
+    const dataUrl = "https://raw.githubusercontent.com/username/repo/branch/data.json";
+    let feesData = null;
 
+    // Function to fetch student data from GitHub
+    async function fetchData() {
+      const loadingIndicator = document.getElementById('loading');
+      loadingIndicator.style.display = 'block';
+      try {
+        const response = await fetch(dataUrl);
+        if (!response.ok) {
+          throw new Error("Network response was not OK");
+        }
+        feesData = await response.json();
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        alert("Error loading data. Please try again later.");
+      } finally {
+        loadingIndicator.style.display = 'none';
+      }
+    }
+
+    // Call fetchData when page loads so that data is ready for lookups
+    window.addEventListener("load", fetchData);
+
+    // Function to generate the fee slip by receipt number lookup
     function generateSlip() {
       const receipt = document.getElementById('receiptInput').value.trim();
       const slip = document.getElementById('feesSlip');
 
-      if (data[receipt]) {
-        document.getElementById('studentName').innerText = data[receipt].name;
-        document.getElementById('rollNumber').innerText = data[receipt].roll;
-        document.getElementById('course').innerText = data[receipt].course;
-        document.getElementById('batch').innerText = data[receipt].batch;
-        document.getElementById('totalFees').innerText = data[receipt].total;
-        document.getElementById('remainingFees').innerText = data[receipt].remaining;
+      if (!feesData) {
+        alert("Data is not loaded yet. Please wait for a few seconds and try again.");
+        return;
+      }
+      
+      if (feesData[receipt]) {
+        document.getElementById('studentName').innerText = feesData[receipt].name;
+        document.getElementById('rollNumber').innerText = feesData[receipt].roll;
+        document.getElementById('course').innerText = feesData[receipt].course;
+        document.getElementById('batch').innerText = feesData[receipt].batch;
+        document.getElementById('totalFees').innerText = feesData[receipt].total;
+        document.getElementById('remainingFees').innerText = feesData[receipt].remaining;
         slip.style.display = 'block';
       } else {
         alert("❌ No record found for this receipt number.");
         slip.style.display = 'none';
       }
     }
+
+    // Add click event listener to the button
+    document.getElementById('viewSlipBtn').addEventListener('click', generateSlip);
   </script>
 
 </body>
