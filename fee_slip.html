@@ -7,36 +7,34 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
   <style>
     * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+      margin: 0; padding: 0; box-sizing: border-box;
     }
     body {
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(50,50,50,0.7)),
-                  url('https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c');
+      background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(30,30,30,0.9)), url('https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c');
       background-size: cover;
       color: #fff;
       min-height: 100vh;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       padding: 20px;
     }
     .container {
       background: rgba(255,255,255,0.1);
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(14px);
       padding: 30px;
       border-radius: 15px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
       max-width: 600px;
       width: 100%;
+      animation: fadeIn 0.8s ease;
     }
     h1 {
       text-align: center;
       margin-bottom: 20px;
-      font-size: 30px;
+      font-size: 28px;
+      color: #64ffda;
     }
     input {
       width: 100%;
@@ -46,6 +44,7 @@
       margin-bottom: 15px;
       font-size: 16px;
       text-align: center;
+      outline: none;
     }
     button {
       width: 100%;
@@ -61,16 +60,11 @@
     button:hover {
       transform: scale(1.03);
     }
-    .loading {
-      text-align: center;
-      margin-bottom: 15px;
-      font-size: 18px;
-    }
     .slip {
       margin-top: 20px;
-      background: rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.15);
       padding: 20px;
-      border-radius: 10px;
+      border-radius: 12px;
       display: none;
       animation: fadeIn 0.5s ease;
     }
@@ -78,12 +72,13 @@
       margin-bottom: 10px;
       border-bottom: 1px solid #ccc;
       padding-bottom: 5px;
+      color: #fff;
     }
     .slip p {
-      margin: 5px 0;
+      margin: 6px 0;
     }
     .qr {
-      margin-top: 10px;
+      margin-top: 15px;
       text-align: center;
     }
     .qr img {
@@ -100,6 +95,13 @@
       font-weight: bold;
       cursor: pointer;
     }
+    .error {
+      text-align: center;
+      margin-top: 10px;
+      color: #ff6b6b;
+      font-weight: bold;
+      animation: fadeIn 0.4s ease;
+    }
     @keyframes fadeIn {
       from {opacity: 0; transform: translateY(20px);}
       to {opacity: 1; transform: translateY(0);}
@@ -111,9 +113,8 @@
   <div class="container">
     <h1>Vintech Fees Slip</h1>
     <input type="text" id="receiptInput" placeholder="Enter Receipt Number (e.g. 2025-001)" />
-    <button id="viewSlipBtn">View Fees Details</button>
-    <!-- Loading indicator -->
-    <div class="loading" id="loading" style="display: none;">Loading data, please wait...</div>
+    <button onclick="generateSlip()">View Fees Details</button>
+    <div id="errorMsg" class="error" style="display:none;">❌ No record found. Please check the receipt number.</div>
 
     <div class="slip" id="feesSlip">
       <h3>Student Fee Details</h3>
@@ -123,66 +124,55 @@
       <p><strong>Batch Time:</strong> <span id="batch"></span></p>
       <p><strong>Total Fees:</strong> ₹<span id="totalFees"></span></p>
       <p><strong>Remaining Fees:</strong> ₹<span id="remainingFees"></span></p>
-      <div class="qr">
+      <div class="qr" id="qrContainer">
         <p><strong>Scan to Pay (if due):</strong></p>
-        <img src="https://api.qrserver.com/v1/create-qr-code/?data=upi://pay?pa=vintech@upi&am=0&cu=INR&tn=Vintech+Fees" alt="QR Code" />
+        <img id="qrCode" src="" alt="QR Code" />
       </div>
       <div class="print-btn" onclick="window.print()">🖨️ Print / Download</div>
     </div>
   </div>
 
   <script>
-    // URL of your JSON file stored on GitHub (update this URL to your actual file)
-    const dataUrl = "https://raw.githubusercontent.com/manishoneman/manishoneman.github.io/main/fee.json";
-    let feesData = null;
+    let feeData = {};
 
-    // Function to fetch student data from GitHub
-    async function fetchData() {
-      const loadingIndicator = document.getElementById('loading');
-      loadingIndicator.style.display = 'block';
-      try {
-        const response = await fetch(dataUrl);
-        if (!response.ok) {
-          throw new Error("Network response was not OK");
-        }
-        feesData = await response.json();
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        alert("Error loading data. Please try again later.");
-      } finally {
-        loadingIndicator.style.display = 'none';
-      }
-    }
+    // Fetch JSON once on page load
+    fetch("https://raw.githubusercontent.com/manishoneman/manishoneman.github.io/main/fee.json")
+      .then(res => res.json())
+      .then(json => feeData = json)
+      .catch(err => console.error("Failed to load data:", err));
 
-    // Call fetchData when page loads so that data is ready for lookups
-    window.addEventListener("load", fetchData);
-
-    // Function to generate the fee slip by receipt number lookup
     function generateSlip() {
       const receipt = document.getElementById('receiptInput').value.trim();
       const slip = document.getElementById('feesSlip');
+      const error = document.getElementById('errorMsg');
 
-      if (!feesData) {
-        alert("Data is not loaded yet. Please wait for a few seconds and try again.");
-        return;
-      }
-      
-      if (feesData[receipt]) {
-        document.getElementById('studentName').innerText = feesData[receipt].name;
-        document.getElementById('rollNumber').innerText = feesData[receipt].roll;
-        document.getElementById('course').innerText = feesData[receipt].course;
-        document.getElementById('batch').innerText = feesData[receipt].batch;
-        document.getElementById('totalFees').innerText = feesData[receipt].total;
-        document.getElementById('remainingFees').innerText = feesData[receipt].remaining;
+      if (feeData[receipt]) {
+        const data = feeData[receipt];
+        document.getElementById('studentName').innerText = data.name;
+        document.getElementById('rollNumber').innerText = data.roll;
+        document.getElementById('course').innerText = data.course;
+        document.getElementById('batch').innerText = data.batch;
+        document.getElementById('totalFees').innerText = data.total;
+        document.getElementById('remainingFees').innerText = data.remaining;
+
+        // Show QR only if remaining > 0
+        const qr = document.getElementById('qrContainer');
+        const qrImg = document.getElementById('qrCode');
+        if (parseInt(data.remaining) > 0) {
+          const upiString = `upi://pay?pa=vintech@upi&am=${data.remaining}&cu=INR&tn=Vintech+Fees+Payment`;
+          qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(upiString)}&size=150x150`;
+          qr.style.display = "block";
+        } else {
+          qr.style.display = "none";
+        }
+
+        error.style.display = 'none';
         slip.style.display = 'block';
       } else {
-        alert("❌ No record found for this receipt number.");
         slip.style.display = 'none';
+        error.style.display = 'block';
       }
     }
-
-    // Add click event listener to the button
-    document.getElementById('viewSlipBtn').addEventListener('click', generateSlip);
   </script>
 
 </body>
