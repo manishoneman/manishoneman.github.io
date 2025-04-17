@@ -236,6 +236,9 @@ body {
   .hero-content p {
     font-size: 1rem;
   }
+  .logo a{
+    font-size: 1.5rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -250,6 +253,9 @@ body {
   .hero-btn {
     padding: 0.8rem 1.5rem;
     font-size: 0.95rem;
+  }
+  .logo a{
+    font-size: 1.2rem;
   }
 }
 
