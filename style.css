@@ -254,9 +254,6 @@ body {
     padding: 0.8rem 1.5rem;
     font-size: 0.95rem;
   }
-  .logo a{
-    font-size: 1.2rem;
-  }
 }
 
 
@@ -537,6 +534,11 @@ body {
   box-shadow: 0 8px 25px rgba(0,0,0,0.05);
   overflow: hidden;
   transition: all 0.3s ease;
+}
+
+.center-box img{
+  margin-left: 33%;
+  
 }
 
 .center-box:hover {
